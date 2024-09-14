@@ -45,7 +45,8 @@ public class WebAppRootConfig {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.acme.domain");
+        //entity thiyena path eka denna oni
+        factory.setPackagesToScan("lk.ijse.notescollectorbackend.entity");
         factory.setDataSource(dataSource());
         return factory;
     }
