@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackages = "lk.ijse.notescollectorbackend")
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackages = "lk.ijse.notescollectorbackend.dao")
 @EnableTransactionManagement
 
 public class WebAppRootConfig {

@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserService {
     UserDTO saveUser(UserDTO userDTO);
     List<UserDTO> getAllUsers();
-    UserDTO getUser();
+    UserDTO getUser(String userId);
     boolean updateUser(String userId,UserDTO userDTO);
-    boolean deleteUser(String userId);
+    void deleteUser(String userId);
 }

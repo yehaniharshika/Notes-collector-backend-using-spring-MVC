@@ -5,6 +5,7 @@ import lk.ijse.notescollectorbackend.dto.impl.UserDTO;
 import lk.ijse.notescollectorbackend.service.UserService;
 import lk.ijse.notescollectorbackend.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,8 +47,20 @@ public class UserController {
         buildUserDTO.setEmail(email);
         buildUserDTO.setPassword(password);
         buildUserDTO.setProfilePic(base64ProPic);
-
+        userService.saveUser(buildUserDTO);
         return buildUserDTO;
+    }
+
+    @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDTO getSelectedUser(@PathVariable ("userId") String userId){
+        return userService.getUser(userId);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(value = "/{userId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteUser(@PathVariable ("userId") String userId){
+        userService.deleteUser(userId);
+        System.out.println("deleted");
     }
 }
 
