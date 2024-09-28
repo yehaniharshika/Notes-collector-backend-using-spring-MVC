@@ -2,6 +2,7 @@ package lk.ijse.notescollectorbackend.service;
 
 import lk.ijse.notescollectorbackend.dao.UserDAO;
 import lk.ijse.notescollectorbackend.dto.impl.UserDTO;
+import lk.ijse.notescollectorbackend.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +13,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
     @Autowired
     private UserDAO userDAO;
+    private Mapping mapping;
     @Override
     public UserDTO saveUser(UserDTO userDTO) {
-        return userDAO.save();
+        userDAO.save(mapping.toUserEntity(userDTO));
+        return userDTO;
     }
 
     @Override
