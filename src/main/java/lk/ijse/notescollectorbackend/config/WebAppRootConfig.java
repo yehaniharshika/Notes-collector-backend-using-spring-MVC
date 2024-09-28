@@ -1,6 +1,7 @@
 package lk.ijse.notescollectorbackend.config;
 
 import jakarta.persistence.EntityManagerFactory;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,13 @@ import javax.sql.DataSource;
 
 public class WebAppRootConfig {
     //DataSource type ake dataSource method ekak meka ---> monawahari data related weda karnna awshya we
+
+    //new keyword eka use karana durlaba awasthawak
+    //@Bean annotation use karanne api hadan nethi object spring ta manage karanna denna
+    @Bean
+    public ModelMapper modelMapper(){
+        return new ModelMapper();
+    }
     @Bean
     public DataSource dataSource() {
         /*in-memory database ekak thama methana thibbe*/
