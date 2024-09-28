@@ -14,9 +14,10 @@ public class AppUtil {
 
     }
 
-    public static String profilePicToBase64(String profilePic){
+    public static String profilePicToBase64(byte[] profilePic){
         //bye collection eka - profile pic eka base64 string ekk bawata herawima
-        Base64.getEncoder().encodeToString(profilePic.getBytes());
-        return profilePic;
+        return Base64.getEncoder().encodeToString(profilePic);
+        /*Base64.getEncoder().encodeToString(profilePic.getBytes());
+        return profilePic;*/
     }
 }
