@@ -17,6 +17,7 @@ public class NoteController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
 
+
     //meke endpoint 5 k open karala thiyenawa
     public NoteDTO saveNote(@RequestBody NoteDTO noteDTO){
         //noteDTO.setNoteId(AppUtil.generateNoteId()); meka gihin demma NoteServiceImpl ekata(ekath business logic ekak)
