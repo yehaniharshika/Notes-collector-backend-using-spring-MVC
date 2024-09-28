@@ -59,4 +59,5 @@ public class WebAppRootConfig {
         txManager.setEntityManagerFactory(entityManagerFactory);
         return txManager;
     }
+
 }
