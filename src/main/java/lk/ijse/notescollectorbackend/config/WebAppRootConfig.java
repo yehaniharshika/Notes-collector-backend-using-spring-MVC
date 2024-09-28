@@ -38,12 +38,13 @@ public class WebAppRootConfig {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        //Hibernate wala JPA wala implementation eka
+        //Hibernate wala JPA wala implementation eka(hibernate wala configuration)
         //entityManagerFactory eken create wenne entityManagers la
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        //adala vendor wa swt karanne methanin
         factory.setJpaVendorAdapter(vendorAdapter);
         //entity thiyena path eka denna oni
         factory.setPackagesToScan("lk.ijse.notescollectorbackend.entity");
@@ -51,7 +52,7 @@ public class WebAppRootConfig {
         return factory;
     }
 
-    //Transaction manager part eka(Transaction manage karanna)
+    //Transaction manager part eka(Transaction manage karanna)-transaction enable part
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
 
