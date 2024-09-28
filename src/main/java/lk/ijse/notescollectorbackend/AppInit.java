@@ -31,6 +31,7 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
         return new String[]{"/"};
     }
 
+    //multipart form data handle karana configuration-meka demmama thamai ek weda karanne
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
         String tempDir = System.getProperty("java.io.tmpdir");
