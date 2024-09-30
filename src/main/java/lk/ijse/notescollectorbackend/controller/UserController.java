@@ -62,12 +62,16 @@ public class UserController {
 
     @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO getSelectedUser(@PathVariable ("userId") String userId){
+
         return userService.getUser(userId);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{userId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteUser(@PathVariable ("userId") String userId){
+        if (userId.isEmpty() || userId == null){
+
+        }
         userService.deleteUser(userId);
         System.out.println("deleted");
     }
