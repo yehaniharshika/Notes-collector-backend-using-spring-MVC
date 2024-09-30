@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("api/v1/users")
@@ -64,7 +65,14 @@ public class UserController {
 
     @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserStatus getSelectedUser(@PathVariable ("userId") String userId){
-        if(userId.isEmpty() || userId ==null){
+        /*if(userId.isEmpty() || userId ==null){
+            return new SelectedUserErrorStatus(1,"User ID is not valid");
+        }
+        return userService.getUser(userId);*/
+        String regexForUserID = "^USER-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForUserID);
+        var regexMatcher = regexPattern.matcher(userId);
+        if(!regexMatcher.matches()){
             return new SelectedUserErrorStatus(1,"User ID is not valid");
         }
         return userService.getUser(userId);
@@ -73,11 +81,8 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{userId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteUser(@PathVariable ("userId") String userId){
-        if (userId.isEmpty() || userId == null){
-
-        }
         userService.deleteUser(userId);
-        System.out.println("deleted");
+
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
