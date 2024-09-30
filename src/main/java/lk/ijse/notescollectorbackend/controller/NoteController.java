@@ -1,10 +1,14 @@
 package lk.ijse.notescollectorbackend.controller;
 
 import lk.ijse.notescollectorbackend.dto.impl.NoteDTO;
+import lk.ijse.notescollectorbackend.dto.impl.UserDTO;
+import lk.ijse.notescollectorbackend.exception.DataPersistException;
 import lk.ijse.notescollectorbackend.service.NoteService;
 import lk.ijse.notescollectorbackend.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,15 +20,18 @@ public class NoteController {
     private NoteService noteService;
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-
-
     //meke endpoint 5 k open karala thiyenawa
-    public NoteDTO saveNote(@RequestBody NoteDTO noteDTO){
+    public ResponseEntity<Void> saveNote(@RequestBody NoteDTO noteDTO){
         //noteDTO.setNoteId(AppUtil.generateNoteId()); meka gihin demma NoteServiceImpl ekata(ekath business logic ekak)
+        try {
+            noteService.saveNote(noteDTO);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (DataPersistException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-        //direct methana service layer ekata call karala thiyenwa
-        noteService.saveNote(noteDTO);
-        return noteDTO;
     }
     public NoteDTO getSelectedNote(){
         return null;

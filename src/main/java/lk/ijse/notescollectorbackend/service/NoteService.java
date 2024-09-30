@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 public interface NoteService {
-    String saveNote(NoteDTO noteDTO);
+    void saveNote(NoteDTO noteDTO);
     List<NoteDTO> getAllNotes();
     NoteDTO getNote();
     boolean updateNote(String noteId);
