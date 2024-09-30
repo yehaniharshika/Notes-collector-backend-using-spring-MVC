@@ -1,7 +1,9 @@
 package lk.ijse.notescollectorbackend.service;
 
+import lk.ijse.notescollectorbackend.customStatusCodes.SelectedUserAndNoteErrorStatus;
 import lk.ijse.notescollectorbackend.dao.NoteDAO;
 import lk.ijse.notescollectorbackend.dao.UserDAO;
+import lk.ijse.notescollectorbackend.dto.NoteStatus;
 import lk.ijse.notescollectorbackend.dto.impl.NoteDTO;
 import lk.ijse.notescollectorbackend.entity.NoteEntity;
 import lk.ijse.notescollectorbackend.exception.DataPersistException;
@@ -19,6 +21,7 @@ public class NoteServiceImpl implements NoteService{
     private static List<NoteDTO> noteDTOList = new ArrayList<>();
     @Autowired
     private NoteDAO noteDAO;
+
     @Autowired
     private Mapping noteMapping;
 
@@ -46,8 +49,13 @@ public class NoteServiceImpl implements NoteService{
     }
 
     @Override
-    public NoteDTO getNote() {
-        return null;
+    public NoteStatus getNote(String noteId) {
+        if (noteDAO.existsById(noteId)){
+            NoteEntity selectedNote = noteDAO.getReferenceById(noteId);
+            return noteMapping.toNoteDTO(selectedNote);
+        }else {
+            return new SelectedUserAndNoteErrorStatus(2,"Selected note not found");
+        }
     }
 
     @Override

@@ -1,8 +1,7 @@
 package lk.ijse.notescollectorbackend.controller;
 
-import lk.ijse.notescollectorbackend.customStatusCodes.SelectedUserErrorStatus;
+import lk.ijse.notescollectorbackend.customStatusCodes.SelectedUserAndNoteErrorStatus;
 import lk.ijse.notescollectorbackend.dto.UserStatus;
-import lk.ijse.notescollectorbackend.dto.impl.NoteDTO;
 import lk.ijse.notescollectorbackend.dto.impl.UserDTO;
 import lk.ijse.notescollectorbackend.exception.DataPersistException;
 import lk.ijse.notescollectorbackend.exception.UserNotFoundException;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -75,7 +73,7 @@ public class UserController {
         Pattern regexPattern = Pattern.compile(regexForUserID);
         var regexMatcher = regexPattern.matcher(userId);
         if(!regexMatcher.matches()){
-            return new SelectedUserErrorStatus(1,"User ID is not valid");
+            return new SelectedUserAndNoteErrorStatus(1,"User ID is not valid");
         }
         return userService.getUser(userId);
     }
