@@ -98,9 +98,9 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     /*public void deleteUser(@PathVariable ("userId") String userId){
         userService.deleteUser(userId);
-
     }*/
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

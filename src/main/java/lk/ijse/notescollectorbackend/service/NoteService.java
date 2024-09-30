@@ -10,7 +10,7 @@ public interface NoteService {
     void saveNote(NoteDTO noteDTO);
     List<NoteDTO> getAllNotes();
     NoteStatus getNote(String noteId);
-    boolean updateNote(String noteId);
+    void updateNote(String noteId,NoteDTO noteDTO);
     void deleteNote(String noteId);
 
 }

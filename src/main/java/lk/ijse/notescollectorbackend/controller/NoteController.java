@@ -78,7 +78,24 @@ public class NoteController {
         }
     }
 
-    public void updateNote(String noteId){
+    @PutMapping(value = "/{noteId}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateNote(@PathVariable("noteId") String noteId,@RequestBody NoteDTO updateNoteDTO){
+        String regexForNoteID = "^NOTE-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForNoteID);
+        var regexMatcher = regexPattern.matcher(noteId);
 
+        try {
+            if(!regexMatcher.matches() || updateNoteDTO == null){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            noteService.updateNote(noteId,updateNoteDTO);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (NoteNotFoundException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
