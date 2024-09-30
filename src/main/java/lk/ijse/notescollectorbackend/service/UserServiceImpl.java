@@ -3,12 +3,15 @@ package lk.ijse.notescollectorbackend.service;
 import lk.ijse.notescollectorbackend.dao.UserDAO;
 import lk.ijse.notescollectorbackend.dto.impl.UserDTO;
 import lk.ijse.notescollectorbackend.entity.UserEntity;
+import lk.ijse.notescollectorbackend.exception.DataPersistException;
 import lk.ijse.notescollectorbackend.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService{
@@ -17,10 +20,15 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private Mapping mapping;
     @Override
-    public UserDTO saveUser(UserDTO userDTO) {
+    public void saveUser(UserDTO userDTO) {
         /*UserEntity saveUser = userDAO.save(mapping.toUserEntity(userDTO));
         return mapping.toUserDTO(saveUser);*/
-        return mapping.toUserDTO(userDAO.save(mapping.toUserEntity(userDTO)));
+        UserEntity saveUser = userDAO.save(mapping.toUserEntity(userDTO));
+
+        if (saveUser == null){
+            throw new DataPersistException("User not saved");
+        }
+        //return mapping.toUserDTO(userDAO.save(mapping.toUserEntity(userDTO)));
     }
 
     @Override
@@ -36,8 +44,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean updateUser(String userId, UserDTO userDTO) {
-        return false;
+    public void updateUser(String userId, UserDTO userDTO) {
+        //findUser =  tmpUser
+        Optional<UserEntity> tmpUser = userDAO.findById(userId);
+
+        if (tmpUser.isPresent()){
+            tmpUser.get().setFirstName(userDTO.getFirstName());
+            tmpUser.get().setLastName(userDTO.getLastName());
+            tmpUser.get().setEmail(userDTO.getEmail());
+            tmpUser.get().setPassword(userDTO.getPassword());
+            tmpUser.get().setProfilePic(userDTO.getProfilePic());
+        }
     }
 
     @Override
