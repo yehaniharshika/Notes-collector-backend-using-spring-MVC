@@ -6,6 +6,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 //api hdana object spring ta manage karanna denne @Component annotation eka use karala
 public class Mapping {
@@ -19,5 +21,8 @@ public class Mapping {
 
     public UserDTO toUserDTO(UserEntity userEntity){
         return modelMapper.map(userEntity,UserDTO.class);
+    }
+    public List<UserDTO> asUserDTOList(List<UserEntity> userEntities){
+        return modelMapper.map(userEntities,List.class);
     }
 }
