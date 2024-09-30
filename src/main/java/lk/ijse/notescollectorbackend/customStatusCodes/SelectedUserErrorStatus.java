@@ -1,5 +1,6 @@
 package lk.ijse.notescollectorbackend.customStatusCodes;
 
+import lk.ijse.notescollectorbackend.dto.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class SelectedUserErrorStatus {
-    private String statusCode;
+public class SelectedUserErrorStatus implements UserStatus {
+    private int statusCode;
     private String statusMessage;
 }

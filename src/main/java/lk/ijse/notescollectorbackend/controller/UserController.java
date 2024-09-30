@@ -1,5 +1,7 @@
 package lk.ijse.notescollectorbackend.controller;
 
+import lk.ijse.notescollectorbackend.customStatusCodes.SelectedUserErrorStatus;
+import lk.ijse.notescollectorbackend.dto.UserStatus;
 import lk.ijse.notescollectorbackend.dto.impl.NoteDTO;
 import lk.ijse.notescollectorbackend.dto.impl.UserDTO;
 import lk.ijse.notescollectorbackend.exception.DataPersistException;
@@ -61,8 +63,10 @@ public class UserController {
     }
 
     @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserDTO getSelectedUser(@PathVariable ("userId") String userId){
-
+    public UserStatus getSelectedUser(@PathVariable ("userId") String userId){
+        if(userId.isEmpty() || userId ==null){
+            return new SelectedUserErrorStatus(1,"User ID is not valid");
+        }
         return userService.getUser(userId);
     }
 

@@ -1,4 +1,6 @@
 package lk.ijse.notescollectorbackend.dto;
 
-public class UserStatus {
+import java.io.Serializable;
+
+public interface UserStatus extends Serializable,SuperDTO {
 }

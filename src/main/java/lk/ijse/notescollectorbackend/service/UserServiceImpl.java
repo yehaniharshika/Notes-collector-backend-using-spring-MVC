@@ -1,6 +1,8 @@
 package lk.ijse.notescollectorbackend.service;
 
+import lk.ijse.notescollectorbackend.customStatusCodes.SelectedUserErrorStatus;
 import lk.ijse.notescollectorbackend.dao.UserDAO;
+import lk.ijse.notescollectorbackend.dto.UserStatus;
 import lk.ijse.notescollectorbackend.dto.impl.UserDTO;
 import lk.ijse.notescollectorbackend.entity.UserEntity;
 import lk.ijse.notescollectorbackend.exception.DataPersistException;
@@ -37,11 +39,21 @@ public class UserServiceImpl implements UserService{
         return mapping.asUserDTOList(allUsers);
     }
 
-    @Override
+    /*@Override
     public UserDTO getUser(String userId) {
         UserEntity selectedUser = userDAO.getReferenceById(userId);
         return mapping.toUserDTO(selectedUser);
+    }*/
+    @Override
+    public UserStatus getUser(String userId) {
+        if(userDAO.existsById(userId)){
+            UserEntity selectedUser = userDAO.getReferenceById(userId);
+            return mapping.toUserDTO(selectedUser);
+        }else {
+            return new SelectedUserErrorStatus(2, "User with id " + userId + " not found");
+        }
     }
+
 
     @Override
     public void updateUser(String userId, UserDTO userDTO) {
